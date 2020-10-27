@@ -1,1 +1,1 @@
-# discound-amongUS
+# discount-amongUS
