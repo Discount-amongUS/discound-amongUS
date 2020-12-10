@@ -24,7 +24,7 @@ def register():
         password = hashlib.md5(password.encode()).hexdigest()
         data = {
             "email": email,
-            "name": name,
+            "name": name.lower(),
             "password": password 
         }
 

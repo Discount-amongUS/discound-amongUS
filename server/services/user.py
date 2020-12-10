@@ -35,5 +35,6 @@ def checkEmail(_email):
     return False
 
 def getUserByName(_name):
-    users = User.query.filter_by(name=_name).all()
+    _name = _name.lower()
+    users = User.query.filter(User.name.contains(_name)).all()
     return users
