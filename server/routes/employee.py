@@ -36,7 +36,7 @@ def getAllEmployees():
         for index in range(len(Employees)):
             data.append({"userID":Employees[index].userID})
 
-    return jsonify(results=data)
+    return jsonify(businessID=int(businessID), results=data)
 
 @app.route('/api/employee/business', methods = ['GET'])
 def getRestaurant():
