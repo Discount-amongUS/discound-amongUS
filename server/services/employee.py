@@ -1,5 +1,5 @@
 from server.models import Employee
-from server.models.index import db
+from server.models import db
 
 
 def addEmployee(data):

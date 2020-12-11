@@ -1,5 +1,5 @@
 from server.models import Business
-from server.models.index import db
+from server.models import db
 
 def createBusiness(data):
     try:

@@ -1,4 +1,4 @@
-from .index import db
+from . import db
 
 class Business(db.Model):
     businessID = db.Column(db.Integer, primary_key=True)

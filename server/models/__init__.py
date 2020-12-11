@@ -1,4 +1,9 @@
-from .index import db
+from server.app import app
+from flask_sqlalchemy import SQLAlchemy
+
+
+db = SQLAlchemy(app)
+
 from .user import User
 from .business import Business
 from .employee import Employee

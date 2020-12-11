@@ -2,6 +2,7 @@ from server.app import app
 from server.services import user
 
 from flask import request, jsonify
+from flask_jwt import JWT, jwt_required, current_identity
 import hashlib
 import jwt
 import re 
@@ -44,12 +45,15 @@ def login():
         if not emailExist:
             return jsonify(msg='Account does not exist!', sucess=False)
         
-        User = user.getUserByEmail(email)
+        User = user.getUserByEmail(email)   
 
         if User.password != hashlib.md5(password.encode()).hexdigest():
             return jsonify(msg='Password is incorrect!', sucess=False)
+
+        token = User.encode_auth_token(User.userID)
+        # print(User.decode_auth_token(token))
         
-        return jsonify(msg='Welcome!', sucess=True)
+        return jsonify(msg='Welcome!', sucess=True, token=str(token))
 
     return jsonify(msg='Fil out all fields!', sucess=False)
 
