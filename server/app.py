@@ -1,10 +1,12 @@
 from flask import Flask
+from flask_cors import CORS
 
 from config import config
 from models import *
 
 
 app = Flask(__name__)
+CORS(app)
 app.config['DEBUG'] = True
 
 app.config['SQLALCHEMY_DATABASE_URI'] = config.URL

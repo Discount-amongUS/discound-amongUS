@@ -3,14 +3,20 @@ from server.services import restaurant
 
 from flask import request, jsonify
 
-# routes
-# /api/restaurant/create                    - needs json body with name, type, address, city, state , owners userID
-# /api/restaurant/get?id=                   - param id
-# /api/restaurant/address?address=          - param address 
-# /api/restaurant/city?city=                - param city
-# /api/restaurant/state?state=              - param state
-# /api/restaurant/type?type=                - param type
-# /api/restaurant/owner?owner=              - param owner (userid)
+"""
+routes
+/api/restaurant/create                    - needs json body with name, type, address, city, state , owners userID
+/api/restaurant/get?id=                   - param id
+/api/restaurant/address?address=          - param address 
+/api/restaurant/city?city=                - param city
+/api/restaurant/state?state=              - param state
+/api/restaurant/type?type=                - param type
+/api/restaurant/owner?owner=              - param owner (userid)
+"""
+
+# @app.route('/api/restaurant/', methods=['POST', 'GET'])
+# def entry():
+#     pass
 
 @app.route('/api/restaurant/create', methods = ['POST'])
 def createRestaurant():
