@@ -34,37 +34,36 @@ An Example `User`:
 
 ```javascript
 {
-  id: 5,
-  firstName: "Mary",
-  lastName: "Jane"
+    email: "test@test.com",
+    name: "test name",
+    userID: 1
 }
 ```
 
-An Example `Item`:
+An Example `Business`:
 
 ```javascript
 {
-  id: 3,
-  name: "Lamp",
-  price: "$19.99"
+    address: "123 lex ave",
+    city: "new york",
+    id: 1,
+    name: "test",
+    owner: 1, // References a userID
+    state: "new york",
+    type: "test"
 }
 ```
 
-An Example `Order`:
+An Example `Business Employees`:
 
 ```javascript
 {
-  id: 1,
-  user_id: 5,// a reference to a User object
-}
-```
-
-An Example `OrderItems`:
-
-```javascript
-{
-  item_id: 3,
-  order_id: 1 // References an Order object
+    businessID: 1, // References a businessID
+    results: [
+        {
+            userID: 1 // References a userID
+        }
+    ]
 }
 ```
 
