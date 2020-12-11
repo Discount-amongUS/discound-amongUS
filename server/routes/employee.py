@@ -6,7 +6,7 @@ from flask import request, jsonify
 """
 /api/employee/add
 /api/employee/employees
-/api/employee/place_of_employment
+/api/employee/business
 """
 @app.route('/api/employee/add', methods = ['POST'])
 def addEmployee():
