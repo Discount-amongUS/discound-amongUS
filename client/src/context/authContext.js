@@ -1,7 +1,6 @@
 import React, { Component, createContext} from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import * as API from "../util/api";
 export const AuthContext = createContext();
 
 
@@ -9,12 +8,12 @@ export const AuthContext = createContext();
 class AuthProvider extends Component {
   state = {
     userID: null,
-    email: "",
     isAuthenicated: false,
   };
   
   componentDidMount() {
     this.checkTokenExpired()
+    console.log(jwt_decode("b'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDc3MTc2NzMsImlhdCI6MTYwNzcxNzY2OCwic3ViIjozfQ.hiYuKzyfKPB24FbAfQWuw8SMIFKlo7EKys3DEvDjfUc'"))
   }
 
   // if the variable existingToken returns true then its proof that the user is Authenicated
@@ -48,16 +47,15 @@ class AuthProvider extends Component {
 
   setUser = (decoded) => {
     this.setState((prevState) => {
-      return { userID: decoded.id, email: decoded.email, isAuthenicated: true };
+      return { userID: decoded.sub, isAuthenicated: true };
     });
   };
 
   LogoutUser = () => {
-    this.updateLastLogin();
     localStorage.removeItem("jwtToken");
     this.setAuthToken(false);
     this.setState((prevState) => {
-      return { userID: null, email: "", isAuthenicated: false };
+      return { userID: null, isAuthenicated: false };
     });
     window.location.href = "./";
   };
@@ -79,21 +77,15 @@ class AuthProvider extends Component {
     }
   };
 
-  updateLastLogin = () => {
-    const { userID } = this.state
-    API.updateLastLogin(userID)
-  }
-
   render() {
     const { children } = this.props;
-    const { userID, email, isAuthenicated } = this.state;
+    const { userID, isAuthenicated } = this.state;
     const {
       setUser,
       setTokens,
       checkTokenExist,
       setAuthToken,
       LogoutUser,
-      updateLastLogin,
       checkTokenExpired,
     } = this;
 
@@ -101,14 +93,12 @@ class AuthProvider extends Component {
       <AuthContext.Provider
         value={{
           userID,
-          email,
           isAuthenicated,
           setUser,
           setTokens,
           checkTokenExist,
           setAuthToken,
           LogoutUser,
-          updateLastLogin,
           checkTokenExpired,
         }}
       >
