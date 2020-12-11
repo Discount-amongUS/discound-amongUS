@@ -1,3 +1,3 @@
 from .user import *
-from .restaurant import *
+from .business import *
 from .employee import *

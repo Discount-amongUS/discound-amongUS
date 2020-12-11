@@ -15,8 +15,16 @@ def addEmployee(data):
 
 def getAllEmployees(_restaurantID):
     try:
-        employees = Employee(restaurant=_restaurantID)
+        employees = Employee.query.filter_by(restaurant=_restaurantID)
         return employees
+    except Exception as Error:
+        print(Error)
+        return "Error"
+
+def getRestaurant(_userID):
+    try:
+        restaurant = Employee.query.filter_by(emplyee=_userID)
+        return restaurant.restaurant
     except Exception as Error:
         print(Error)
         return "Error"

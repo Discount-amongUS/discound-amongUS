@@ -1,6 +1,6 @@
 from .index import db
 from .user import User
-from .restaurant import Restaurant
+from .business import Business
 from .employee import Employee
 
 db.create_all()
