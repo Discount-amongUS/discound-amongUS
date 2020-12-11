@@ -47,7 +47,7 @@ def getBusinessByID():
     if request.method == 'GET' and query_parameters.get('id'):
         _id = query_parameters.get('id')
         Business = business.findBusinessByID(_id)
-        return jsonify(id=Business.businessID, owner=Business.owner, name=Business.name, address=Business.address, city=Business.city, state=Business.state)
+        return jsonify(id=Business.businessID, owner=Business.owner, name=Business.name, address=Business.address, city=Business.city, state=Business.state, type=Business.type)
     else:
         return jsonify(msg='Fil out all fields!', sucess=False)
 
@@ -56,9 +56,9 @@ def getBusinessByAddress():
     query_parameters = request.args
 
     if request.method == 'GET' and query_parameters.get('address'):
-        address = query_parameters.get('address')
+        address = query_parameters.get('address').lower()
         Business = business.findBusinessByAddress(address)
-        return jsonify(id=Business.businessID, owner=Business.owner, name=Business.name, address=Business.address, city=Business.city, state=Business.state)
+        return jsonify(id=Business.businessID, owner=Business.owner, name=Business.name, address=Business.address, city=Business.city, state=Business.state, type=Business.type)
     else:
         return jsonify(msg='Fil out all fields!', sucess=False)
 
@@ -67,11 +67,11 @@ def getBusinessByName():
     query_parameters = request.args
 
     if request.method == 'GET' and query_parameters.get('name'):
-        name = query_parameters.get('name')
+        name = query_parameters.get('name').lower()
         Businesses = business.findBusinessByName(name)
         data =[]
         for index in range(len(Businesses)):
-            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state}
+            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state, "type":Businesses[index].type }
             data.append(rest)
         return jsonify(data)
     else:
@@ -82,11 +82,11 @@ def getBusinessByCity():
     query_parameters = request.args
 
     if request.method == 'GET' and query_parameters.get('city'):
-        city = query_parameters.get('city')
+        city = query_parameters.get('city').lower()
         Businesses = business.findBusinessByCity(city)
         data =[]
         for index in range(len(Businesses)):
-            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state}
+            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state, "type":Businesses[index].type }
             data.append(rest)
         return jsonify(data)
     else:
@@ -97,11 +97,11 @@ def getBusinessByState():
     query_parameters = request.args
 
     if request.method == 'GET' and query_parameters.get('state'):
-        state = query_parameters.get('state')
+        state = query_parameters.get('state').lower()
         Businesses = business.findBusinessByState(state)
         data =[]
         for index in range(len(Businesses)):
-            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state}
+            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state, "type":Businesses[index].type}
             data.append(rest)
         return jsonify(data)
     else:
@@ -112,11 +112,11 @@ def getBusinessByType():
     query_parameters = request.args
 
     if request.method == 'GET' and query_parameters.get('type'):
-        _type = query_parameters.get('type')
+        _type = query_parameters.get('type').lower()
         Businesses = business.findBusinessByType(_type)
         data =[]
         for index in range(len(Businesses)):
-            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state}
+            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state, "type":Businesses[index].type}
             data.append(rest)
         return jsonify(data)
     else:
@@ -131,7 +131,7 @@ def getBusinessByOwner():
         Businesses = business.findBusinessByOwner(owner)
         data =[]
         for index in range(len(Businesses)):
-            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state}
+            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state, "type":Businesses[index].type}
             data.append(rest)
         return jsonify(data)
     else:

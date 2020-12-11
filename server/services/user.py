@@ -13,7 +13,7 @@ def createUser(data):
 
 def getUserByID(_id):
     try:
-        user = User.query.filter_by(id=_id).first()
+        user = User.query.filter_by(userID=_id).first()
         return user
     except Exception as Error:
         return "Error"

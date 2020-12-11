@@ -4,7 +4,7 @@ from server.models.index import db
 
 def addEmployee(data):
     try:
-        employee = Employee(restaurant=data["restaurantID"], employee=data["userID"])
+        employee = Employee(businessID=data["businessID"], userID=data["userID"])
         db.session.add(employee)
         db.session.commit()
         return employee
@@ -13,18 +13,18 @@ def addEmployee(data):
         return "Error"
 
 
-def getAllEmployees(_restaurantID):
+def getAllEmployees(_businessID):
     try:
-        employees = Employee.query.filter_by(restaurant=_restaurantID)
+        employees = Employee.query.filter_by(businessID=_businessID).all()
         return employees
     except Exception as Error:
         print(Error)
         return "Error"
 
-def getRestaurant(_userID):
+def getUserPlaceOfEmployment(_userID):
     try:
-        restaurant = Employee.query.filter_by(emplyee=_userID)
-        return restaurant.restaurant
+        employee = Employee.query.filter_by(userID=_userID).first()
+        return employee
     except Exception as Error:
         print(Error)
         return "Error"

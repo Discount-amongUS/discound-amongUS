@@ -60,7 +60,7 @@ def getUser():
         _id = query_parameters.get('id')
         User = user.getUserByID(_id)
 
-    return jsonify(id=User.id, email=User.email, name=User.name)
+    return jsonify(id=User.userID, email=User.email, name=User.name)
 
 @app.route('/api/user/search', methods = ['GET', 'POST'])
 def lookUserUp():
@@ -71,14 +71,14 @@ def lookUserUp():
         
         if email:
             User = user.getUserByEmail(email)
-            return jsonify(id=User.id, email=User.email, name=User.name)
+            return jsonify(userID=User.userID, email=User.email, name=User.name)
 
         if name:
             Users = user.getUserByName(name)
             data = []
 
             for index in range(len(Users)):
-                entry = [Users[index].id, Users[index].name, Users[index].email]    
+                entry = [Users[index].userID, Users[index].name, Users[index].email]    
                 data.append(entry)
 
             return jsonify(data=data)
