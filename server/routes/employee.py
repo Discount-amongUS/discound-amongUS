@@ -2,23 +2,35 @@ from server.app import app
 from server.services import employee
 
 from flask import request, jsonify
+import re 
 
 """
 /api/employee/add
 /api/employee/employees
 /api/employee/business
+/api/employee/remove - params email and businessID
 """
 @app.route('/api/employee/add', methods = ['POST'])
 def addEmployee():
-    if request.method == 'POST' and 'businessID' in request.json and 'userID' in request.json:
-        businessID = request.json['businessID']
-        userID = request.json['userID']
+    if request.method == 'POST' and 'businessID' in request.json and 'first_name' in request.json and 'last_name' in request.json and 'email' in request.json:
+        businessID = request.json['businessID'].lower()
+        first_name = request.json['first_name'].lower()
+        last_name = request.json['last_name'].lower()
+        email = request.json['email'].lower()
+
+        if not re.match(r'[^@]+@[^@]+\.[^@]+', email):
+            return jsonify(msg='Invalid email address!', sucess=False)
+
+        if employee.checkEmail(businessID, email):
+            return jsonify(msg='Already added this employee!', sucess=False)
         
-        data = {"userID": userID, "businessID":businessID}
+        data = { "businessID": businessID, "first_name": first_name, "last_name": last_name, "email": email }
 
         Employee = employee.addEmployee(data)
+
+        result = {"email": Employee.employeeEmail, "businessID": Employee.businessID, "first_name": Employee.first_name, "last_name": Employee.last_name}
         
-        return jsonify(sucess=True, businessID=Employee.businessID, userID=Employee.userID)
+        return jsonify(sucess=True, data=result)
         
 
     return jsonify(sucess=False, msg='Fill out all fields!')
@@ -28,22 +40,50 @@ def getAllEmployees():
     query_parameters = request.args
 
     if request.method == 'GET' and query_parameters.get('businessID'):
-        businessID = query_parameters.get('businessID')
+        businessID = query_parameters.get('businessID').lower()
+
         Employees = employee.getAllEmployees(businessID)
-        
         data = []
 
         for index in range(len(Employees)):
-            data.append({"userID":Employees[index].userID})
+            data.append({ "email": Employees[index].employeeEmail, "first_name": Employees[index].first_name, "last_name": Employees[index].last_name})
 
-    return jsonify(businessID=int(businessID), results=data)
+    return jsonify(businessID=businessID, results=data)
 
 @app.route('/api/employee/business', methods = ['GET'])
 def getRestaurant():
     query_parameters = request.args
 
-    if request.method == 'GET' and query_parameters.get('userID'):
-        userID = query_parameters.get('userID')
-        Employee = employee.getUserPlaceOfEmployment(userID)
+    if request.method == 'GET' and query_parameters.get('email'):
+        email = query_parameters.get('email').lower()
 
-    return jsonify(businessID=Employee.businessID)
+        if not re.match(r'[^@]+@[^@]+\.[^@]+', email):
+            return jsonify(msg='Invalid email address!', sucess=False)
+
+        Employee = employee.getUserPlaceOfEmployment(email)
+
+        if len(Employee) == 0:
+            return jsonify(sucess=False, msg="Email was not found!")
+        
+        data = []
+        for index in range(len(Employee)):
+            data.append({  "businessID": Employee[index].businessID, "email": Employee[index].employeeEmail, "first_name": Employee[index].first_name, "last_name": Employee[index].last_name})
+
+        return jsonify(results=data)
+
+@app.route('/api/employee/remove', methods = ['DELETE'])
+def removeEmployee():
+    query_parameters = request.args
+
+    if request.method == 'DELETE' and query_parameters.get('email') and query_parameters.get('businessID'):
+
+        email = query_parameters.get('email').lower()
+        businessID = query_parameters.get('businessID').lower()
+
+        if employee.checkEmail(businessID, email):
+            employee.deleteEmployee(businessID, email)
+            return jsonify(sucess=True, msg="Employee has been removed!")
+        
+        return jsonify(sucess=False, msg="Employee does not Exist!")
+
+    return jsonify(sucess=False, msg="Fill out all fields!")

@@ -3,12 +3,11 @@ from server.models import db
 
 def createUser(data):
     try:
-        user = User(name=data["name"], email=data["email"], password=data["password"])
+        user = User(first_name=data["first_name"], last_name=data["last_name"], email=data["email"], password=data["password"])
         db.session.add(user)
         db.session.commit()
         return user
     except Exception as Error:
-        print(Error)
         return "Error"
 
 def getUserByID(_id):
@@ -34,7 +33,17 @@ def checkEmail(_email):
         return False
     return False
 
-def getUserByName(_name):
-    _name = _name.lower()
-    users = User.query.filter(User.name.contains(_name)).all()
-    return users
+def getUserByName(first_name, last_name):
+    first_name = first_name.lower()
+    last_name = last_name.lower()
+
+    users = User.query.filter(User.first_name.contains(first_name)).all() + User.query.filter(User.last_name.contains(last_name)).all()
+    data = []
+    seen_users = set([])
+    
+    for user in users:
+        if user.userID not in seen_users:
+            data.append(user)
+            seen_users.add(user.userID)
+
+    return data
