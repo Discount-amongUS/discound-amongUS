@@ -1,36 +1,35 @@
 import React, { Component } from 'react'
-import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
-import './Home.css';
+import { Link } from 'react-router-dom';
+import './Menu.css';
 
 
-export class Home extends Component {
+export class Menu extends Component {
     render() {
         return (
             <div className="view">
-                <h1 className="au-header">Welcome to Discount AmongUS</h1>
-                <h5>Choose your option:</h5>
+                <h1 className="au-header">Menu</h1>
                 <div>
                     <Row className="au-row">
-                        <Link to="/discount-check">
+                        <Link to="/addremove-business">
                             <Button className="au-btn" variant="dark" size="lg">
-                                Check For Discount
-                        </Button>
+                                Add/Remove a Business
+                            </Button>
                         </Link>
                     </Row>
                     <Row className="au-row">
-                        <Link to="/owner-login">
+                        <Link to="/addremove-user">
                             <Button className="au-btn" variant="dark" size="lg">
-                                Owner Login
-                        </Button>
+                                Add/Remove A User
+                            </Button>
                         </Link>
                     </Row>
                     <Row className="au-row">
-                        <Link to="/register-owner">
+                        <Link to="/Locations">
                             <Button className="au-btn" variant="dark" size="lg">
-                                Owner Register
-                        </Button>
+                                View Businesses
+                            </Button>
                         </Link>
                     </Row>
                 </div>
@@ -39,4 +38,4 @@ export class Home extends Component {
     }
 }
 
-export default Home
+export default Menu
