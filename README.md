@@ -59,10 +59,17 @@ An Example `Business Employees`:
 
 ```javascript
 {
-    businessID: 1, // References a businessID
+    businessID: "123-jkl", // References a businessID 
     results: [
         {
-            userID: 1 // References a userID
+            email: "test2@test.com",
+            first_name: "first",
+            last_name: "last"
+        },
+        {
+            email: "test3@test.com",
+            first_name: "first",
+            last_name: "last"
         }
     ]
 }
@@ -87,6 +94,9 @@ Here's an [example](https://www.kauligmedia.com/media/1589/sitemap-01.jpg). Most
 
 ## References Used
 
-(___TODO__: List any tutorials or material referenced that you've based your code off of_)
+https://github.com/Fall-2020-Website-Design/FindLoveNow
+https://dev.to/aminu_israel/using-json-web-token-jwt-with-python-3n4p
+https://pyjwt.readthedocs.io/en/stable/
+https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/#querying-records
 
 ## Authors
