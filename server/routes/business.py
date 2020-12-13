@@ -5,13 +5,14 @@ from flask import request, jsonify
 
 """
 routes
-/api/business/create                    - needs json body with name, type, address, city, state , owners userID
+/api/business/create                    - needs json body with name, zipcode, address, city, state , owners userID, businessID
 /api/business/get?id=                   - param id
 /api/business/address?address=          - param address 
 /api/business/city?city=                - param city
 /api/business/state?state=              - param state
-/api/business/type?type=                - param type
+/api/business/zipcode?zipcode=          - param zipcode
 /api/business/owner?owner=              - param owner (userid)
+/api/business/delete?businessID=()&userID=()         - param businessID and userID
 """
 
 # @app.route('/api/business/', methods=['POST', 'GET'])
@@ -20,18 +21,23 @@ routes
 
 @app.route('/api/business/create', methods = ['POST'])
 def createBusiness():
-    if request.method == 'POST' and 'name' in request.json and 'type' in request.json and 'address' in request.json and 'city' in request.json and 'state' in request.json:
+    if request.method == 'POST' and 'businessID' in request.json and 'name' in request.json and 'zipcode' in request.json and 'address' in request.json \
+    and 'city' in request.json and 'state' in request.json:
         owner = request.json['userID']
         name = request.json['name'].lower()
-        _type = request.json ['type'].lower()
+        zipcode = request.json ['zipcode']
         address = request.json['address'].lower()
         city = request.json['city'].lower()
         state = request.json['state'].lower()
+        businessID = request.json['businessID'].lower()
         
         if business.checkBusinessAddress(address):
             return jsonify(msg='Address is taken!', sucess=False)
 
-        data = { "owner":owner, "name": name, "type": _type, "address":address, "city":city, "state":state }
+        if business.checkBusinessByID(businessID):
+            return jsonify(msg='BusinessID is taken!', sucess=False)
+
+        data = { "owner":owner, "name": name, "zipcode": zipcode, "address":address, "city":city, "state":state, "businessID":businessID }
 
         business.createBusiness(data)
         return jsonify(msg='success!', sucess=True)
@@ -47,7 +53,7 @@ def getBusinessByID():
     if request.method == 'GET' and query_parameters.get('id'):
         _id = query_parameters.get('id')
         Business = business.findBusinessByID(_id)
-        return jsonify(id=Business.businessID, owner=Business.owner, name=Business.name, address=Business.address, city=Business.city, state=Business.state, type=Business.type)
+        return jsonify(id=Business.businessID, owner=Business.owner, name=Business.name, address=Business.address, city=Business.city, state=Business.state, zipcode=Business.zipcode)
     else:
         return jsonify(msg='Fil out all fields!', sucess=False)
 
@@ -58,7 +64,7 @@ def getBusinessByAddress():
     if request.method == 'GET' and query_parameters.get('address'):
         address = query_parameters.get('address').lower()
         Business = business.findBusinessByAddress(address)
-        return jsonify(id=Business.businessID, owner=Business.owner, name=Business.name, address=Business.address, city=Business.city, state=Business.state, type=Business.type)
+        return jsonify(id=Business.businessID, owner=Business.owner, name=Business.name, address=Business.address, city=Business.city, state=Business.state, zipcode=Business.zipcode)
     else:
         return jsonify(msg='Fil out all fields!', sucess=False)
 
@@ -71,7 +77,7 @@ def getBusinessByName():
         Businesses = business.findBusinessByName(name)
         data =[]
         for index in range(len(Businesses)):
-            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state, "type":Businesses[index].type }
+            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state, "zipcode":Businesses[index].zipcode }
             data.append(rest)
         return jsonify(data)
     else:
@@ -86,7 +92,7 @@ def getBusinessByCity():
         Businesses = business.findBusinessByCity(city)
         data =[]
         for index in range(len(Businesses)):
-            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state, "type":Businesses[index].type }
+            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state, "zipcode":Businesses[index].zipcode }
             data.append(rest)
         return jsonify(data)
     else:
@@ -101,22 +107,22 @@ def getBusinessByState():
         Businesses = business.findBusinessByState(state)
         data =[]
         for index in range(len(Businesses)):
-            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state, "type":Businesses[index].type}
+            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state, "zipcode":Businesses[index].zipcode}
             data.append(rest)
         return jsonify(data)
     else:
         return jsonify(msg='Fil out all fields!', sucess=False)
 
-@app.route('/api/business/type', methods = ['GET'])
-def getBusinessByType():
+@app.route('/api/business/zipcode', methods = ['GET'])
+def getBusinessByZipcode():
     query_parameters = request.args
 
-    if request.method == 'GET' and query_parameters.get('type'):
-        _type = query_parameters.get('type').lower()
-        Businesses = business.findBusinessByType(_type)
+    if request.method == 'GET' and query_parameters.get('zipcode'):
+        zipcode = query_parameters.get('zipcode').lower()
+        Businesses = business.findBusinessByZipcode(zipcode)
         data =[]
         for index in range(len(Businesses)):
-            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state, "type":Businesses[index].type}
+            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state, "zipcode":Businesses[index].zipcode}
             data.append(rest)
         return jsonify(data)
     else:
@@ -130,9 +136,34 @@ def getBusinessByOwner():
         owner = query_parameters.get('owner')
         Businesses = business.findBusinessByOwner(owner)
         data =[]
+
         for index in range(len(Businesses)):
-            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state, "type":Businesses[index].type}
+            rest = {"id":Businesses[index].businessID, "owner":Businesses[index].owner, "name":Businesses[index].name, "address":Businesses[index].address, "city":Businesses[index].city, "state":Businesses[index].state, "zipcode":Businesses[index].zipcode}
             data.append(rest)
+
         return jsonify(data)
+    else:
+        return jsonify(msg='Fil out all fields!', sucess=False)
+
+
+@app.route('/api/business/delete', methods = ['DELETE'])
+def deleteBusiness():
+    query_parameters = request.args
+
+    if request.method == 'DELETE' and query_parameters.get('businessID') and query_parameters.get('userID'):
+        businessID = query_parameters.get('businessID')
+        userID = query_parameters.get('userID')
+
+        if not business.checkBusinessByID(businessID):
+            return jsonify(sucess=False, msg="businessID is not valid!")
+
+        Business = business.findBusinessByID(businessID)
+
+        if int(userID) != Business.owner:
+            return jsonify(sucess=False, msg="You are not the owner!")
+
+        business.deleteBusiness(businessID) 
+        return jsonify(sucess=True)
+
     else:
         return jsonify(msg='Fil out all fields!', sucess=False)

@@ -35,8 +35,9 @@ An Example `User`:
 ```javascript
 {
     email: "test@test.com",
-    name: "test name",
-    userID: 1
+    first_name: "first",
+    userID: 1,
+    last_name: "last"
 }
 ```
 
@@ -46,11 +47,11 @@ An Example `Business`:
 {
     address: "123 lex ave",
     city: "new york",
-    id: 1,
     name: "test",
     owner: 1, // References a userID
     state: "new york",
-    type: "test"
+    zipcode: 12345,
+    businessID: "test-id"
 }
 ```
 

@@ -3,12 +3,11 @@ from server.models import db
 
 def createBusiness(data):
     try:
-        business = Business(owner=data["owner"], name=data["name"], address=data["address"], city=data["city"], state=data["state"], type=data["type"])
+        business = Business(owner=data["owner"], name=data["name"], address=data["address"], city=data["city"], state=data["state"], zipcode=data["zipcode"], businessID=data["businessID"])
         db.session.add(business)
         db.session.commit()
         return business
     except Exception as Error:
-        print(Error)
         return "Error"
 
 def findBusinessByID(_id):
@@ -30,9 +29,9 @@ def findBusinessByName(_name):
         return "Error"
 
 
-def findBusinessByType(_type):
+def findBusinessByZipcode(_zipcode):
     try:
-        businesses = Business.query.filter_by(type=_type).all()
+        businesses = Business.query.filter_by(zipcode=_zipcode).all()
         return businesses
     except Exception as Error:
         print(Error)
@@ -78,3 +77,21 @@ def checkBusinessAddress(_address):
     except Exception as Error:
         print(Error)
         return False
+
+def checkBusinessByID(_id):
+    try:
+        business = Business.query.filter_by(businessID=_id).first()
+        print(business)
+        if business: return True
+        return False
+    except Exception as Error:
+        return False
+
+
+def deleteBusiness(_id):
+    try:
+        business = Business.query.filter_by(businessID=_id).first()
+        db.session.delete(business)
+        db.session.commit()
+    except Exception as Error:
+        return Error
