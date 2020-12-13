@@ -53,6 +53,7 @@ def getBusinessByID():
     if request.method == 'GET' and query_parameters.get('id'):
         _id = query_parameters.get('id')
         Business = business.findBusinessByID(_id)
+
         return jsonify(id=Business.businessID, owner=Business.owner, name=Business.name, address=Business.address, city=Business.city, state=Business.state, zipcode=Business.zipcode)
     else:
         return jsonify(msg='Fil out all fields!', sucess=False)

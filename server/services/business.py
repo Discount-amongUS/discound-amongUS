@@ -18,7 +18,6 @@ def findBusinessByID(_id):
         print(Error)
         return "Error"
 
-
 def findBusinessByName(_name):
     try:
         _name = _name.lower()

@@ -20,9 +20,9 @@ def getAllEmployees(_businessID):
         print(Error)
         return "Error"
 
-def getUserPlaceOfEmployment(_userID):
+def getUserPlaceOfEmployment(_email):
     try:
-        employee = Employee.query.filter_by(userID=_userID).first()
+        employee = Employee.query.filter_by(employeeEmail=_email).all()
         return employee
     except Exception as Error:
         print(Error)

@@ -8,6 +8,7 @@ import re
 /api/employee/add
 /api/employee/employees
 /api/employee/business
+/api/employee/remove - params email and businessID
 """
 @app.route('/api/employee/add', methods = ['POST'])
 def addEmployee():
@@ -42,7 +43,6 @@ def getAllEmployees():
         businessID = query_parameters.get('businessID').lower()
 
         Employees = employee.getAllEmployees(businessID)
-        
         data = []
 
         for index in range(len(Employees)):
@@ -54,11 +54,22 @@ def getAllEmployees():
 def getRestaurant():
     query_parameters = request.args
 
-    if request.method == 'GET' and query_parameters.get('userID'):
-        userID = query_parameters.get('userID')
-        Employee = employee.getUserPlaceOfEmployment(userID)
+    if request.method == 'GET' and query_parameters.get('email'):
+        email = query_parameters.get('email').lower()
 
-    return jsonify(businessID=Employee.businessID)
+        if not re.match(r'[^@]+@[^@]+\.[^@]+', email):
+            return jsonify(msg='Invalid email address!', sucess=False)
+
+        Employee = employee.getUserPlaceOfEmployment(email)
+
+        if len(Employee) == 0:
+            return jsonify(sucess=False, msg="Email was not found!")
+        
+        data = []
+        for index in range(len(Employee)):
+            data.append({  "businessID": Employee[index].businessID, "email": Employee[index].employeeEmail, "first_name": Employee[index].first_name, "last_name": Employee[index].last_name})
+
+        return jsonify(results=data)
 
 @app.route('/api/employee/remove', methods = ['DELETE'])
 def removeEmployee():
@@ -71,6 +82,7 @@ def removeEmployee():
 
         if employee.checkEmail(businessID, email):
             employee.deleteEmployee(businessID, email)
+            return jsonify(sucess=True, msg="Employee has been removed!")
         
         return jsonify(sucess=False, msg="Employee does not Exist!")
 
