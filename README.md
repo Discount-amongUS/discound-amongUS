@@ -11,13 +11,71 @@ The content below is an example submission document. Replace the text below the 
 
 
 ## Getting Started
-(___TODO__: These instructions will get you a copy of the project up and running on your local machine for development and testing purposes_)
+
+`Client`:
+1. npm install
+2. npm start
+
+`Server`:
+1. make virtual env:
+    https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
+
+2. activate the virtual env you created
+
+3. install requirements.txt:
+    pip install -r requirements.txt
+
+4. run this command to make package on the root dir:
+    pip install -e .
+
+5. make .env file in the following dir server/config/
+    The .env should have the following virables with your postgres info
+
+    Example: 
+    
+    POSTGRES_URL="127.0.0.1:5432"
+    POSTGRES_USER="postgres"
+    POSTGRES_PW="password"
+    POSTGRES_DB="amongus"
+
+6. run server:
+    a. cd server
+    b. python app.py
+
 
 
 ## Requirements
 
-(___TODO__: List out any technologies needed to run your project_)
+For Server The following is `Required`:
 
+```python
+Flask==1.1.2
+Flask-SQLAlchemy==2.4.1
+flask-cors
+python-dotenv
+pyjwt==1.4.2
+Psycopg2==2.8.4
+SQLAlchemy==1.3
+```
+
+For Client The following is `Required`:
+
+```json
+"dependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "axios": "^0.21.0",
+    "bootstrap": "^4.5.3",
+    "jwt-decode": "^3.1.2",
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.4.0",
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.0",
+    "web-vitals": "^0.2.4"
+}
+```
 
 ## Data Model
 
@@ -28,7 +86,6 @@ The application will store user, items, and orders.
 - Users can have many orders.
 - Orders can have many items.
 
-(___TODO__: Sample resources_)
 
 An Example `User`:
 
