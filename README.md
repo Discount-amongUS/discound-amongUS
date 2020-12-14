@@ -94,9 +94,9 @@ Here's an [example](https://www.kauligmedia.com/media/1589/sitemap-01.jpg). Most
 
 ## References Used
 
-https://github.com/Fall-2020-Website-Design/FindLoveNow
-https://dev.to/aminu_israel/using-json-web-token-jwt-with-python-3n4p
-https://pyjwt.readthedocs.io/en/stable/
-https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/#querying-records
+1. https://github.com/Fall-2020-Website-Design/FindLoveNow
+2. https://dev.to/aminu_israel/using-json-web-token-jwt-with-python-3n4p
+3. https://pyjwt.readthedocs.io/en/stable/
+4. https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/#querying-records
 
 ## Authors
