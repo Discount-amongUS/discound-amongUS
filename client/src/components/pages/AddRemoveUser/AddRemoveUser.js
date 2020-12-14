@@ -64,9 +64,9 @@ export class AddRemoveUser extends Component {
                     }
                     else {
                         this.setState({
-                            errors: result.data.msg
+                            apiError: result.data.msg
                         })
-                        let dangerAlert = document.getElementById("login");
+                        let dangerAlert = document.getElementById("add-user");
                         dangerAlert.style.display = "block";
                     }
                 }

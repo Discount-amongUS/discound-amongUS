@@ -23,17 +23,17 @@ def addEmployee():
         if not re.match(r'[^@]+@[^@]+\.[^@]+', email):
             return jsonify(msg='Invalid email address!', success=False)
 
-        if employee.checkEmail(businessID, email):
-            return jsonify(msg='Already added this employee!', success=False)
-
-        # add check for request to be owner of business
         Business = business.findBusinessByID(businessID)
-        print(Business)
+
         if not Business: 
             return jsonify(msg='Not a valid BLN!', success=False)
 
         if owner != Business.owner:
             return jsonify(msg='You can not add an Employee!', success=False)
+
+        if employee.checkEmail(businessID, email):
+            return jsonify(msg='Already added this employee!', success=False)
+
 
         
         data = { "businessID": businessID, "first_name": first_name, "last_name": last_name, "email": email }
@@ -119,19 +119,33 @@ def findEmployee():
         Employee = employee.getUserPlaceOfEmployment(email)
         
         ids = []
-        names = []
-        for index in range(len(Employee)):
-            ids.append(Employee[index].businessID)
+        worksAt = []
 
-        print(ids)
-        
         if not Employee:
             return jsonify(success=False, msg="Employee does not Exist!")
 
-        related = []
+        for index in range(len(Employee)):
+            ids.append(Employee[index].businessID)
+    
+        owners = set([])
+        
         for _id in ids:
-            name = business.findBusinessByID(_id).name
-            print(name)
-            related.append(name)
+            Business = business.findBusinessByID(_id)
+            worksAt.append(Business.name)
+            if Business.owner not in owners:
+                owners.add(Business.owner)
 
-        return jsonify(success=True, work=ids, names=related)
+
+        allBusinesses = []
+        for owner in owners:
+            Business = business.findBusinessByOwner(owner)
+            allBusinesses += Business
+
+        print(allBusinesses)
+        
+        sameOwner = []
+        for bus in allBusinesses:
+            data = { "name": bus.name, "address": bus.address, "city": bus.city, "state": bus.state }
+            sameOwner.append(data)
+
+        return jsonify(success=True, worksAt=worksAt, sameOwner=sameOwner, email=email)

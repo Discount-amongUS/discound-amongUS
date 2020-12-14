@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const PORT = 5000;
-const URL = `http://localhost:${PORT}/api/`;
+const URL = `/api/`;
 
 const registerUser = (userData) => {
     return axios.post(URL + 'user/register' , userData)
