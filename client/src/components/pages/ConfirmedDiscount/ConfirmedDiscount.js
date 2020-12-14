@@ -10,8 +10,8 @@ export class ConfirmedDiscount extends Component {
         return (
             <div className="view">
                 <h1 className="au-header">Confirmed</h1>
-                <h4>Businesss: "name"</h4>
-                <h4>Had been added!</h4>
+                <h4></h4>
+                <h4></h4>
                 <div>
                     <Row className="au-row">
                         <Link to="/">
