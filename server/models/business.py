@@ -1,7 +1,8 @@
 from . import db
 
 class Business(db.Model):
-    businessID = db.Column(db.String(120), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    businessID = db.Column(db.String(120), nullable=False)
     owner = db.Column(db.Integer, db.ForeignKey('user.userID'))
     name = db.Column(db.String(120), nullable=False)
     address = db.Column(db.String(120), nullable=False)

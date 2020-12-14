@@ -80,16 +80,16 @@ def checkBusinessAddress(_address):
 def checkBusinessByID(_id):
     try:
         business = Business.query.filter_by(businessID=_id).first()
-        print(business)
         if business: return True
         return False
     except Exception as Error:
         return False
 
 
-def deleteBusiness(_id):
+def deleteBusiness(_id, _owner):
     try:
-        business = Business.query.filter_by(businessID=_id).first()
+        business = Business.query.filter_by(businessID=_id, owner=_owner).one()
+        print(business.businessID)
         db.session.delete(business)
         db.session.commit()
     except Exception as Error:

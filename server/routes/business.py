@@ -15,36 +15,32 @@ routes
 /api/business/delete?businessID=()&userID=()         - param businessID and userID
 """
 
-# @app.route('/api/business/', methods=['POST', 'GET'])
-# def entry():
-#     pass
-
 @app.route('/api/business/create', methods = ['POST'])
 def createBusiness():
     if request.method == 'POST' and 'businessID' in request.json and 'name' in request.json and 'zipcode' in request.json and 'address' in request.json \
     and 'city' in request.json and 'state' in request.json:
         owner = request.json['userID']
         name = request.json['name'].lower()
-        zipcode = request.json ['zipcode']
+        zipcode = int(request.json ['zipcode'])
         address = request.json['address'].lower()
         city = request.json['city'].lower()
         state = request.json['state'].lower()
         businessID = request.json['businessID'].lower()
         
         if business.checkBusinessAddress(address):
-            return jsonify(msg='Address is taken!', sucess=False)
+            return jsonify(msg='Address is taken!', success=False)
 
         if business.checkBusinessByID(businessID):
-            return jsonify(msg='BusinessID is taken!', sucess=False)
+            return jsonify(msg='BusinessID is taken!', success=False)
 
         data = { "owner":owner, "name": name, "zipcode": zipcode, "address":address, "city":city, "state":state, "businessID":businessID }
 
         business.createBusiness(data)
-        return jsonify(msg='success!', sucess=True)
+        return jsonify(msg='success!', success=True)
 
     else:
-        return jsonify(msg='Fil out all fields!', sucess=False)
-
+        return jsonify(msg='Fil out all fields!', success=False)
+ 
 
 @app.route('/api/business/get', methods = ['GET'])
 def getBusinessByID():
@@ -56,7 +52,7 @@ def getBusinessByID():
 
         return jsonify(id=Business.businessID, owner=Business.owner, name=Business.name, address=Business.address, city=Business.city, state=Business.state, zipcode=Business.zipcode)
     else:
-        return jsonify(msg='Fil out all fields!', sucess=False)
+        return jsonify(msg='Fil out all fields!', success=False)
 
 @app.route('/api/business/address', methods = ['GET'])
 def getBusinessByAddress():
@@ -67,7 +63,7 @@ def getBusinessByAddress():
         Business = business.findBusinessByAddress(address)
         return jsonify(id=Business.businessID, owner=Business.owner, name=Business.name, address=Business.address, city=Business.city, state=Business.state, zipcode=Business.zipcode)
     else:
-        return jsonify(msg='Fil out all fields!', sucess=False)
+        return jsonify(msg='Fil out all fields!', success=False)
 
 @app.route('/api/business/name', methods = ['GET'])
 def getBusinessByName():
@@ -82,7 +78,7 @@ def getBusinessByName():
             data.append(rest)
         return jsonify(data)
     else:
-        return jsonify(msg='Fil out all fields!', sucess=False)
+        return jsonify(msg='Fil out all fields!', success=False)
 
 @app.route('/api/business/city', methods = ['GET'])
 def getBusinessByCity():
@@ -97,7 +93,7 @@ def getBusinessByCity():
             data.append(rest)
         return jsonify(data)
     else:
-        return jsonify(msg='Fil out all fields!', sucess=False)
+        return jsonify(msg='Fil out all fields!', success=False)
 
 @app.route('/api/business/state', methods = ['GET'])
 def getBusinessByState():
@@ -112,7 +108,7 @@ def getBusinessByState():
             data.append(rest)
         return jsonify(data)
     else:
-        return jsonify(msg='Fil out all fields!', sucess=False)
+        return jsonify(msg='Fil out all fields!', success=False)
 
 @app.route('/api/business/zipcode', methods = ['GET'])
 def getBusinessByZipcode():
@@ -127,7 +123,7 @@ def getBusinessByZipcode():
             data.append(rest)
         return jsonify(data)
     else:
-        return jsonify(msg='Fil out all fields!', sucess=False)
+        return jsonify(msg='Fil out all fields!', success=False)
 
 @app.route('/api/business/owner', methods = ['GET'])
 def getBusinessByOwner():
@@ -144,7 +140,7 @@ def getBusinessByOwner():
 
         return jsonify(data)
     else:
-        return jsonify(msg='Fil out all fields!', sucess=False)
+        return jsonify(msg='Fil out all fields!', success=False)
 
 
 @app.route('/api/business/delete', methods = ['DELETE'])
@@ -156,15 +152,15 @@ def deleteBusiness():
         userID = query_parameters.get('userID')
 
         if not business.checkBusinessByID(businessID):
-            return jsonify(sucess=False, msg="businessID is not valid!")
+            return jsonify(success=False, msg="businessID is not valid!")
 
         Business = business.findBusinessByID(businessID)
 
         if int(userID) != Business.owner:
-            return jsonify(sucess=False, msg="You are not the owner!")
+            return jsonify(success=False, msg="You are not the owner!")
 
-        business.deleteBusiness(businessID) 
-        return jsonify(sucess=True)
+        business.deleteBusiness(businessID, userID) 
+        return jsonify(success=True)
 
     else:
-        return jsonify(msg='Fil out all fields!', sucess=False)
+        return jsonify(msg='Fil out all fields!', success=False)

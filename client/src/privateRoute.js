@@ -13,7 +13,7 @@ function PrivateRoute({ component: Component, ...rest }) {
         checkTokenExist() ? (
           <Component {...props} />
         ) : (
-            <Redirect to="/login" />
+            <Redirect to="/owner-login" />
         )
       }
     />

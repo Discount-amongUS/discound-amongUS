@@ -13,7 +13,7 @@ export class ConfirmedBusiness extends Component {
                 <h5>Business Has Been Added.</h5>
                 <div>
                     <Row className="au-row">
-                        <Link to="/">
+                        <Link to="/menu">
                             <Button className="au-btn" variant="dark" size="lg">
                                 Back to Menu
                             </Button>

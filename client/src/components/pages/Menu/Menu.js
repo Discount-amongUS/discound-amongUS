@@ -12,16 +12,30 @@ export class Menu extends Component {
                 <h1 className="au-header">Menu</h1>
                 <div>
                     <Row className="au-row">
-                        <Link to="/addremove-business">
+                        <Link to="/add-business">
                             <Button className="au-btn" variant="dark" size="lg">
-                                Add/Remove a Business
+                                Add a Business
                             </Button>
                         </Link>
                     </Row>
                     <Row className="au-row">
-                        <Link to="/addremove-user">
+                        <Link to="/remove-business">
                             <Button className="au-btn" variant="dark" size="lg">
-                                Add/Remove A User
+                                Remove a Business
+                            </Button>
+                        </Link>
+                    </Row>
+                    <Row className="au-row">
+                        <Link to="/add-user">
+                            <Button className="au-btn" variant="dark" size="lg">
+                                Add An Employee
+                            </Button>
+                        </Link>
+                    </Row>
+                    <Row className="au-row">
+                        <Link to="/remove-user">
+                            <Button className="au-btn" variant="dark" size="lg">
+                                Remove An Employee
                             </Button>
                         </Link>
                     </Row>

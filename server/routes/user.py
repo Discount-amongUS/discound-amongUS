@@ -8,24 +8,24 @@ import re
 @app.route('/api/user/register', methods = ['GET', 'POST'])
 def register():
     if request.method == 'POST' and 'first_name' in request.json and 'last_name' in request.json and 'email' in request.json \
-    and 'password' in request.json and 'password2' in request.json:
+    and 'password' in request.json and 'password1' in request.json:
 
         email = request.json['email']
         first_name = request.json['first_name']
         last_name = request.json['last_name']
         password = request.json['password']
-        password2 = request.json['password2']
+        password2 = request.json['password1']
 
         if password != password2:
-            return jsonify(msg='Passwords do not match!', sucess=False)
+            return jsonify(msg='Passwords do not match!', success=False)
 
         if not re.match(r'[^@]+@[^@]+\.[^@]+', email):
-            return jsonify(msg='Invalid email address!', sucess=False)
+            return jsonify(msg='Invalid email address!', success=False)
 
         emailExist = user.checkEmail(email)
 
         if emailExist:
-            return jsonify(msg='Account already exists!', sucess=False)
+            return jsonify(msg='Account already exists!', success=False)
 
         password = hashlib.md5(password.encode()).hexdigest()
 
@@ -37,10 +37,10 @@ def register():
         }
 
         user.createUser(data)
-        return jsonify(msg='Sucess!', sucess=True)
+        return jsonify(msg='Sucess!', success=True)
 
     else:
-        return jsonify(msg='Fil out all fields!', sucess=False)
+        return jsonify(msg='Fil out all fields!', success=False)
 
 @app.route('/api/user/login', methods = ['GET', 'POST'])
 def login():
@@ -51,19 +51,19 @@ def login():
         emailExist = user.checkEmail(email)
 
         if not emailExist:
-            return jsonify(msg='Account does not exist!', sucess=False)
+            return jsonify(msg='Account does not exist!', success=False)
         
         User = user.getUserByEmail(email)   
 
         if User.password != hashlib.md5(password.encode()).hexdigest():
-            return jsonify(msg='Password is incorrect!', sucess=False)
+            return jsonify(msg='Password is incorrect!', success=False)
 
         token = User.encode_auth_token(User.userID)
         # print(User.decode_auth_token(token))
         
-        return jsonify(msg='Welcome!', sucess=True, token=str(token))
+        return jsonify(msg='Welcome!', success=True, token=str(token))
 
-    return jsonify(msg='Fil out all fields!', sucess=False)
+    return jsonify(msg='Fil out all fields!', success=False)
 
 @app.route('/api/user', methods = ['GET', 'POST'])
 def getUser():
