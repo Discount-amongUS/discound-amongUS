@@ -2,11 +2,16 @@ import React, { Component } from 'react'
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import { Link } from 'react-router-dom';
-import './Menu.css';
 
+import './Menu.css';
+import { AuthContext } from "../../../context/authContext";
 
 export class Menu extends Component {
+    static contextType = AuthContext; 
+
     render() {
+        const { LogoutUser } = this.context
+
         return (
             <div className="view">
                 <h1 className="au-header">Menu</h1>
@@ -43,6 +48,13 @@ export class Menu extends Component {
                         <Link to="/Locations">
                             <Button className="au-btn" variant="dark" size="lg">
                                 View Businesses
+                            </Button>
+                        </Link>
+                    </Row>
+                    <Row className="au-row">
+                        <Link>
+                            <Button className="au-btn" variant="dark" size="lg" onClick={ LogoutUser } >
+                                Logout
                             </Button>
                         </Link>
                     </Row>
