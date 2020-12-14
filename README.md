@@ -157,3 +157,5 @@ Here's an [example](https://www.kauligmedia.com/media/1589/sitemap-01.jpg). Most
 4. https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/#querying-records
 
 ## Authors
+Edgar
+Dor
