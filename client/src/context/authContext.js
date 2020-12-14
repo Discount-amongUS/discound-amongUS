@@ -13,7 +13,6 @@ class AuthProvider extends Component {
   
   componentDidMount() {
     this.checkTokenExpired()
-    console.log(jwt_decode("b'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDc3MTc2NzMsImlhdCI6MTYwNzcxNzY2OCwic3ViIjozfQ.hiYuKzyfKPB24FbAfQWuw8SMIFKlo7EKys3DEvDjfUc'"))
   }
 
   // if the variable existingToken returns true then its proof that the user is Authenicated

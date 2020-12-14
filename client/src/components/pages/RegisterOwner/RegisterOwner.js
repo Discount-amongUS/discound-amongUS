@@ -1,17 +1,24 @@
 import React, { Component } from 'react'
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
+
 import "./RegisterOwner.css";
+import * as API from '../../../util/api';
+import { AuthContext } from "../../../context/authContext";
 
 
 export class RegisterOwner extends Component {
-
+    static contextType = AuthContext;
+    
     constructor() {
         super();
         this.state = {
-            username: "",
+            first_name: "",
+            last_name: "",
             email: "",
             password: "",
             password1: "",
+            apiError: "",
             errors: [],
         };
     }
@@ -22,38 +29,72 @@ export class RegisterOwner extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const { username, email, password, password1 } = this.state;
+        const { first_name, last_name, email, password, password1 } = this.state;
         var newState = Object.assign({}, this.state);
         newState.errors = [];
-        if (username === "") {
-            newState.errors.push("Please Enter a Username");
+        if (first_name === "") {
+            newState.errors.push("Please Enter a First Name. ");
+        }
+        if (last_name === "") {
+            newState.errors.push("Please Enter a Last Name. ");
         }
         if (email === "") {
-            newState.errors.push("Please Enter an Email");
+            newState.errors.push("Please Enter an Email. ");
         }
         if (password === "" || password1 === "") {
-            newState.errors.push("Please Enter a Password in the Right Fields");
+            newState.errors.push("Please Enter a Password. ");
         }
         if (password !== password1) {
-            newState.errors.push("Passwords Do Not Match");
+            newState.errors.push("Passwords Do Not Match. ");
         }
         if (newState.errors.length === 0) {
             //backend starts here
-            console.log(newState);
+            API.registerUser(newState).then((result) => {
+                console.log(result)
+                if (result.status === 200) { 
+                    console.log(result.data)
+                    if(result.data.success === true) {
+                        window.location.replace("/owner-login");
+                    }
+                    else {
+                        let dangerAlert = document.getElementById("danger");
+                        dangerAlert.style.display = "block";
+                        this.setState({
+                            apiError: result.data.msg
+                        })
+                    }
+                }
+            }).catch((error) => {
+                console.log(error);
+            })
+        }
+        else {
+            let dangerAlert = document.getElementById("danger");
+            dangerAlert.style.display = "block";
         }
 
         this.setState(newState);
     };
 
     render() {
+        const { errors, apiError } = this.state;
+        
         return (
             <div className="view">
                 <div className="owner-login">
-                    <h1 className="au-header">Register as Owner</h1>
+                <Alert variant='danger' className="register-alert" id="danger">
+                    { errors.length === 0? apiError: errors }
+                </Alert>
+                    <h1 className="au-header mb-5">Register as Owner</h1>
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-group">
-                            <label>Username:</label>
-                            <input type="id" className="form-control" placeholder="Enter Username" onChange={this.handleChange("username")} />
+                            <label>First Name:</label>
+                            <input type="id" className="form-control" placeholder="Enter First Name" onChange={this.handleChange("first_name")} />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Last Name:</label>
+                            <input type="id" className="form-control" placeholder="Enter Last Name" onChange={this.handleChange("last_name")} />
                         </div>
                         
                         <div className="form-group">

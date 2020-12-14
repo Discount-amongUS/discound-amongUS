@@ -5,3 +5,7 @@
 .au-row-addremove button{
     margin: 0.5rem;
 }
+
+.registerBusiness-alert {
+    display: none;
+}

@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
+
 import "./DiscountCheck.css";
+import * as API from '../../../util/api';
 
 
 export class DiscountCheck extends Component {
@@ -9,7 +12,6 @@ export class DiscountCheck extends Component {
         super();
         this.state = {
             email: "",
-            businessName: "",
             errors: [],
         };
     }
@@ -20,19 +22,32 @@ export class DiscountCheck extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const { email, businessName } = this.state;
+        const { email } = this.state;
         var newState = Object.assign({},this.state);
         newState.errors = [];
 
         if (email === "") {
             newState.errors.push("Please Enter Email");
         }
-        if (businessName === "") {
-            newState.errors.push("Please Enter Busniess Name");
-        }
         if (newState.errors.length === 0) {
             //backend starts here
             console.log(newState);
+            API.findEmployee(email).then((result) => {
+                if (result.status === 200) {
+                    if (result.data.success === true) {
+                        console.log(result.data);
+                        // this.setState({
+                        //     works: 
+                        // })
+                    }
+                    else {
+                        let dangerAlert = document.getElementById("discount");
+                        dangerAlert.style.display = "block";
+                    }
+                }
+            }).catch((error) => {
+                console.log(error);
+            })
             
         }
 
@@ -42,9 +57,13 @@ export class DiscountCheck extends Component {
 
 
     render() {
+
         return (
             <div className="view">
                 <div className="discount-check">
+                    <Alert variant='danger' className="login-alert" id="discount">
+                        Email not found!
+                    </Alert>
                     <h1 className="au-header">Discount Check</h1>
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-group">
@@ -52,14 +71,9 @@ export class DiscountCheck extends Component {
                             <input type="email" className="form-control" placeholder="Enter Email" onChange={this.handleChange("email")} />
                         </div>
 
-                        <div className="form-group">
-                            <label>Store Name:</label>
-                            <input type="name" className="form-control" placeholder="Enter Stroe's Name" onChange={this.handleChange("businessName")} />
-                        </div>
-
                         <Button className="au-btn" variant="dark" size="lg" type="submit">
                             Check
-                            </Button>
+                        </Button>
                     </form>
                 </div>
             </div>

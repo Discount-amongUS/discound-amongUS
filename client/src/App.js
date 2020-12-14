@@ -6,13 +6,17 @@ import Home from "./components/pages/Home/Home";
 import OwnerLogin from "./components/pages/OwnerLogin/OwnerLogin";
 import Locations from "./components/pages/Locations/Locations";
 import AddRemoveUser from "./components/pages/AddRemoveUser/AddRemoveUser";
+import RemoveUser from "./components/pages/RemoveUser/RemoveUser";
 import AddRemoveBusiness from "./components/pages/AddRemoveBusiness/AddRemoveBusiness";
+import RemoveBusiness from "./components/pages/RemoveBusiness/RemoveBusiness";
 import DiscountCheck from "./components/pages/DiscountCheck/DiscountCheck";
 import Menu from "./components/pages/Menu/Menu"
 import RegisterOwner from "./components/pages/RegisterOwner/RegisterOwner";
 import ConfirmedBusiness from './components/pages/ConfirmedBusiness/ConfirmedBusiness';
 import ConfirmedUser from './components/pages/ConfirmedUser/ConfirmedUser';
 import ConfirmedDiscount from './components/pages/ConfirmedDiscount/ConfirmedDiscount';
+
+import PrivateRoute from "./privateRoute";
 
 
 export class App extends Component {
@@ -24,14 +28,16 @@ export class App extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/owner-login" component={OwnerLogin} />
             <Route exact path="/discount-check" component={DiscountCheck} />
-            <Route exact path="/locations" component={Locations} />
-            <Route exact path="/addremove-user" component={AddRemoveUser} />
-            <Route exact path="/addremove-business" component={AddRemoveBusiness} />
-            <Route exact path="/menu" component={Menu} />
             <Route exact path="/register-owner" component={RegisterOwner} />
-            <Route exact path="/confirmed-business" component={ConfirmedBusiness} />
+            <PrivateRoute exact path="/locations" component={Locations} />
+            <PrivateRoute exact path="/add-user" component={AddRemoveUser} />
+            <PrivateRoute exact path="/remove-user" component={RemoveUser} />
+            <PrivateRoute exact path="/add-business" component={AddRemoveBusiness} />
+            <PrivateRoute exact path="/remove-business" component={RemoveBusiness} />
+            <PrivateRoute exact path="/menu" component={Menu} />
+            <PrivateRoute exact path="/confirmed-business" component={ConfirmedBusiness} />
             <Route exact path="/confirmed-discount" component={ConfirmedDiscount} />
-            <Route exact path="/confirmed-user" component={ConfirmedUser} />
+            <PrivateRoute exact path="/confirmed-user" component={ConfirmedUser} />
           </Switch>
         </Router>
       </AuthProvider>
