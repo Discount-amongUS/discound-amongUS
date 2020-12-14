@@ -1,7 +1,3 @@
-The content below is an example submission document. Replace the text below the lines marked "__TODO__" with details specific to your project. Remove the "TODO" lines.
-
-
-
 # Discount Amongus
 
 
@@ -83,8 +79,9 @@ For Client The following is `Required`:
 
 The application will store user, items, and orders.
 
-- Users can have many orders.
-- Orders can have many items.
+- Users can have many businesses.
+- Business can have many employees.
+- Employees can work for multiple businesses.
 
 
 An Example `User`:
@@ -155,6 +152,7 @@ Here's an [example](https://www.kauligmedia.com/media/1589/sitemap-01.jpg). Most
 2. https://dev.to/aminu_israel/using-json-web-token-jwt-with-python-3n4p
 3. https://pyjwt.readthedocs.io/en/stable/
 4. https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/#querying-records
+5. https://github.com/Sanjeev-Thiyagarajan/PERN-STACK-DEPLOYMENT
 
 ## Authors
 Edgar
