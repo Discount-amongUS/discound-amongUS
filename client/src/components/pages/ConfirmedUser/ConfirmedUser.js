@@ -9,8 +9,8 @@ export class ConfirmedUser extends Component {
     render() {
         return (
             <div className="view">
-                <h4>Username: "name"</h4>
-                <h3>Had been added!</h3>
+                <h2>Success!</h2>
+                <h5>User Has been added.</h5>
                 <div>
                     <Row className="au-row">
                         <Link to="/">

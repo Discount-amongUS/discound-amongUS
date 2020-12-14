@@ -9,8 +9,8 @@ export class ConfirmedBusiness extends Component {
     render() {
         return (
             <div className="view">
-                <h4>Businesss: "name"</h4>
-                <h3>Has been added!</h3>
+                <h2>Success!</h2>
+                <h5>Business Has Been Added.</h5>
                 <div>
                     <Row className="au-row">
                         <Link to="/">
