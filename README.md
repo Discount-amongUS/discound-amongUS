@@ -75,8 +75,6 @@ For Client The following is `Required`:
 
 ## Data Model
 
-(___TODO__: A description of your application's data and their relationships to each other_)
-
 The application will store user, items, and orders.
 
 - Users can have many businesses.
@@ -139,12 +137,7 @@ Here's an [example](https://www.kauligmedia.com/media/1589/sitemap-01.jpg). Most
 
 (___TODO__: Write out how your application will be used through [user stories](http://en.wikipedia.org/wiki/User_story#Format)_)
 
-1. As non-registered user, I can create a new account on the site.
-2. As a user, I can log in to the site.
-3. As a user, I can view items for sale.
-4. As a user, I can add items to a shopping cart.
-5. as a user, I can remove items from a shopping cart.
-6. as a user, I can purchase items in my cart.
+
 
 ## References Used
 
@@ -157,3 +150,4 @@ Here's an [example](https://www.kauligmedia.com/media/1589/sitemap-01.jpg). Most
 ## Authors
 Edgar
 Dor
+Hyunmin
