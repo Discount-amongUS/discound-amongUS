@@ -3,7 +3,7 @@
 
 ## Overview
 
-(___TODO__: A brief one or two paragraph, high-level description of your project_)
+Discount AmongUs is made to use for local businesses that own different locations. Usually, an employee can get a discount at any location under the same company and it should apply the same in the restaurant industry as well. However, there is no single application out there that does this job yet. From a personal experience, it felt like there should be one for restaurant businesses and their employees. Because workers from location A do not know workers from location B so that it is hard to recognize each other and ask for a discount even though they work for the same company. Hence, there should be a convenient way of recognizing each other for a discount. In order to solve this problem, our group came up with this app called Discount AmongUs, which is simple and convenient to use for both sides. Employees get registered by their store manager and pull up their phones for a discount in different locations and get verified with their email, which shows their place of work. Owners can add and remove store managers and store managers can add and remove their employees.
 
 
 ## Getting Started
@@ -135,9 +135,14 @@ Here's an [example](https://www.kauligmedia.com/media/1589/sitemap-01.jpg). Most
 
 ## User Stories or Use Cases
 
-(___TODO__: Write out how your application will be used through [user stories](http://en.wikipedia.org/wiki/User_story#Format)_)
-
-
+1. As a user, I can signup to be owner
+2. As a user, I can login
+3. As an owner, I can add business
+4. As an owner, I can remove business 
+5. As an owner, I can add employees 
+6. As an owner, I can remove employees
+7. As an owner, I can view my businesses 
+8. As an employee, I can check for discounts
 
 ## References Used
 
