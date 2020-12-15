@@ -129,9 +129,7 @@ An Example `Business Employees`:
 
 ## Site map
 
-(___TODO__: Draw out a site map that shows how pages are related to each other_)
-
-Here's an [example](https://www.kauligmedia.com/media/1589/sitemap-01.jpg). Mostly looking for the names of pages and where they flow to.
+![alt text](https://github.com/Discount-amongUS/discount-amongUS/blob/main/images/Discount_AmongUS_sitemap_transparentBG.png)
 
 ## User Stories or Use Cases
 
